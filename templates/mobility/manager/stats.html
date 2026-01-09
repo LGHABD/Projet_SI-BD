@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Dashboard Responsable{% endblock %}
+{% block content %}
+<h2 class="fw-bold mb-3">Dashboard — Responsable Mobilité</h2>
+
+<div class="row g-3">
+  <div class="col-md-3">
+    <div class="card rounded-4 shadow-sm border-0"><div class="card-body">
+      <div class="text-muted">Étudiants</div><div class="fs-3 fw-bold">{{ kpi.students_total }}</div>
+    </div></div>
+  </div>
+  <div class="col-md-3">
+    <div class="card rounded-4 shadow-sm border-0"><div class="card-body">
+      <div class="text-muted">Éligibles</div><div class="fs-3 fw-bold">{{ kpi.students_eligible }}</div>
+    </div></div>
+  </div>
+  <div class="col-md-3">
+    <div class="card rounded-4 shadow-sm border-0"><div class="card-body">
+      <div class="text-muted">Desiderata soumis</div><div class="fs-3 fw-bold">{{ kpi.desiderata_submitted }}</div>
+    </div></div>
+  </div>
+  <div class="col-md-3">
+    <div class="card rounded-4 shadow-sm border-0"><div class="card-body">
+      <div class="text-muted">Affectés</div><div class="fs-3 fw-bold">{{ kpi.assigned }}</div>
+    </div></div>
+  </div>
+</div>
+
+<div class="row g-3 mt-1">
+  <div class="col-md-6">
+    <div class="card rounded-4 shadow-sm border-0">
+      <div class="card-body">
+        <h5 class="fw-semibold">Documents en attente</h5>
+        <div class="fs-2 fw-bold">{{ kpi.docs_pending }}</div>
+        <div class="text-muted small">Validation par la scolarité (admin Django)</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card rounded-4 shadow-sm border-0">
+      <div class="card-body">
+        <h5 class="fw-semibold">Répartition top filières</h5>
+        <ul class="mb-0">
+          {% for row in top_filiere %}
+            <li>{{ row.filiere__nom }} : <b>{{ row.n }}</b></li>
+          {% empty %}
+            <li class="text-muted">Aucune donnée.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

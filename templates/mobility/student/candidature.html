@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Ma candidature{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h2 class="fw-bold mb-0">Ma candidature</h2>
+    <div class="text-muted">Informations et statut</div>
+  </div>
+  <span class="badge text-bg-primary">{{ student.statut }}</span>
+</div>
+
+<div class="card rounded-4 shadow-sm border-0">
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-4"><div class="fw-semibold">CNE</div>{{ student.cne }}</div>
+      <div class="col-md-4"><div class="fw-semibold">Apogée</div>{{ student.code_apogee }}</div>
+      <div class="col-md-4"><div class="fw-semibold">Filière</div>{{ student.filiere.nom }}</div>
+      <div class="col-md-4"><div class="fw-semibold">Email</div>{{ student.user.email }}</div>
+      <div class="col-md-4"><div class="fw-semibold">Téléphone</div>{{ student.telephone }}</div>
+    </div>
+    <hr>
+    <div class="d-flex gap-2">
+      <a class="btn btn-primary" href="{% url 'student_desiderata' %}">Remplir desiderata</a>
+      <a class="btn btn-outline-primary" href="{% url 'student_documents' %}">Téléverser documents</a>
+      <a class="btn btn-outline-dark" href="{% url 'student_results' %}">Voir résultats</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

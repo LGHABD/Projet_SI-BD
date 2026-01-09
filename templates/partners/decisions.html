@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Portail partenaire{% endblock %}
+{% block content %}
+<h2 class="fw-bold mb-1">Portail partenaire (MVP)</h2>
+<p class="text-muted">Ici, le partenaire pourra consulter les étudiants affectés et saisir une décision.</p>
+
+<div class="card rounded-4 shadow-sm border-0">
+  <div class="card-body">
+    <h5 class="fw-semibold">Affectations (liste demo)</h5>
+    <div class="table-responsive">
+      <table class="table table-sm align-middle">
+        <thead><tr><th>Étudiant</th><th>Partenaire</th><th>Type</th><th>Date</th></tr></thead>
+        <tbody>
+          {% for a in affectations %}
+            <tr>
+              <td>{{ a.student.cne }}</td>
+              <td>{{ a.place.partenaire.nom }}</td>
+              <td>{{ a.place.type_mobilite }}</td>
+              <td>{{ a.date_affectation }}</td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="4" class="text-muted">Aucune affectation.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="text-muted small">
+      Pour relier “User partenaire” à “Partenaire”, ajoutez un champ FK dans `accounts.User` ou un modèle profile.
+    </div>
+  </div>
+</div>
+{% endblock %}

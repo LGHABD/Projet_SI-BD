@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Tableau de bord — Responsable{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <div>
+    <h2 class="fw-bold mb-0">Tableau de bord</h2>
+    <div class="text-muted">Espace Responsable Mobilité</div>
+  </div>
+  <span class="badge rounded-pill text-bg-primary">{{ user.role }}</span>
+</div>
+
+<div class="row g-3">
+  <div class="col-md-4">
+    <div class="card rounded-4 shadow-sm border-0">
+      <div class="card-body">
+        <h5 class="fw-semibold">Sélection</h5>
+        <p class="text-muted">Calcul des notes, classement.</p>
+        <a class="btn btn-primary" href="{% url 'manager_run_selection' %}">Lancer</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card rounded-4 shadow-sm border-0">
+      <div class="card-body">
+        <h5 class="fw-semibold">Affectation FIFO</h5>
+        <p class="text-muted">Affecter selon classement + desiderata + capacités.</p>
+        <a class="btn btn-warning" href="{% url 'manager_run_fifo' %}">Exécuter</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card rounded-4 shadow-sm border-0">
+      <div class="card-body">
+        <h5 class="fw-semibold">Statistiques</h5>
+        <p class="text-muted">KPIs et suivi.</p>
+        <a class="btn btn-outline-primary" href="{% url 'manager_stats' %}">Voir</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

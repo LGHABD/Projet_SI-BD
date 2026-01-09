@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Affectation FIFO{% endblock %}
+{% block content %}
+<h2 class="fw-bold mb-1">Affectation FIFO</h2>
+<p class="text-muted">Affecter selon classement + desiderata + capacités des places.</p>
+
+<div class="card rounded-4 shadow-sm border-0">
+  <div class="card-body">
+    <form method="post" class="row g-3">
+      {% csrf_token %}
+      <div class="col-md-4">
+        <label class="form-label">Année universitaire</label>
+        <input class="form-control" name="annee_univ" value="2024/2025">
+      </div>
+      <div class="col-md-8 d-flex align-items-end">
+        <button class="btn btn-warning fw-semibold">Exécuter FIFO</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

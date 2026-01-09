@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Sélection du profil{% endblock %}
+
+{% block content %}
+<div class="page-center">
+  <div class="role-select-page">
+
+    <!-- TITLE -->
+    <div class="role-select-title-wrap role-select-title-only">
+      <h2 class="role-select-title">Sélectionnez votre profil</h2>
+      <p class="role-select-subtitle">Choisissez votre rôle pour accéder à votre espace.</p>
+    </div>
+
+    <!-- GRID -->
+    <div class="role-grid">
+      <a class="role-card role-student" href="{% url 'login' %}?role=STUDENT">
+        <div class="role-card-icon"><i class="bi bi-mortarboard"></i></div>
+        <div class="role-card-title">Étudiant</div>
+        <div class="role-card-subtitle">Gérer ma candidature et mes desiderata</div>
+      </a>
+
+      <a class="role-card role-manager" href="{% url 'login' %}?role=MOBILITY_MANAGER">
+        <div class="role-card-icon"><i class="bi bi-person"></i></div>
+        <div class="role-card-title">Responsable Mobilité</div>
+        <div class="role-card-subtitle">Gérer le processus de mobilité</div>
+      </a>
+
+      <a class="role-card role-admin" href="{% url 'login' %}?role=SCHOOL_ADMIN">
+        <div class="role-card-icon"><i class="bi bi-journal-text"></i></div>
+        <div class="role-card-title">Administration (Scolarité)</div>
+        <div class="role-card-subtitle">Gestion des comptes et documents</div>
+      </a>
+
+      <a class="role-card role-director" href="{% url 'login' %}?role=DIRECTOR">
+        <div class="role-card-icon"><i class="bi bi-bar-chart-line"></i></div>
+        <div class="role-card-title">Direction</div>
+        <div class="role-card-subtitle">Tableaux de bord et statistiques</div>
+      </a>
+
+      <a class="role-card role-partner role-card-wide" href="{% url 'login' %}?role=PARTNER">
+        <div class="role-card-icon"><i class="bi bi-people"></i></div>
+        <div class="role-card-title">Partenaire</div>
+        <div class="role-card-subtitle">Consultation et décision sur les étudiants</div>
+      </a>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

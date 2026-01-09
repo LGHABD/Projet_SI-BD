@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Résultats{% endblock %}
+{% block content %}
+<h2 class="fw-bold mb-1">Résultats & décisions</h2>
+<p class="text-muted">Sélection, affectation, décision finale.</p>
+
+<div class="row g-3">
+  <div class="col-md-6">
+    <div class="card rounded-4 shadow-sm border-0">
+      <div class="card-body">
+        <h5 class="fw-semibold">Sélection</h5>
+        {% if student.selection_result %}
+          <div>Note: <b>{{ student.selection_result.note_selection }}</b></div>
+          <div>Rang: <b>{{ student.selection_result.rang }}</b></div>
+          <div>En attente: <b>{{ student.selection_result.passe_attente }}</b></div>
+        {% else %}
+          <div class="text-muted">Pas de résultat de sélection pour le moment.</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card rounded-4 shadow-sm border-0">
+      <div class="card-body">
+        <h5 class="fw-semibold">Affectation</h5>
+        {% if student.affectation %}
+          <div>Partenaire: <b>{{ student.affectation.place.partenaire.nom }}</b></div>
+          <div>Type: <b>{{ student.affectation.place.type_mobilite }}</b></div>
+          <div>Statut: <b>{{ student.affectation.statut }}</b></div>
+        {% else %}
+          <div class="text-muted">Aucune affectation.</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

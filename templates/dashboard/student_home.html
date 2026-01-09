@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Tableau de bord — Étudiant{% endblock %}
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <div>
+    <h2 class="fw-bold mb-0">Tableau de bord</h2>
+    <div class="text-muted">Espace Étudiant</div>
+  </div>
+  <span class="badge rounded-pill text-bg-primary">{{ user.role }}</span>
+</div>
+
+<div class="row g-3">
+  <div class="col-md-6">
+    <div class="card rounded-4 shadow-sm border-0">
+      <div class="card-body">
+        <h5 class="fw-semibold">Statut candidature</h5>
+        <p class="mb-0">Consultez votre état, remplissez vos desiderata et téléversez vos documents.</p>
+        <div class="mt-3 d-flex gap-2">
+          <a class="btn btn-outline-primary" href="{% url 'student_candidature' %}">Ma candidature</a>
+          <a class="btn btn-primary" href="{% url 'student_desiderata' %}">Mes desiderata</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card rounded-4 shadow-sm border-0">
+      <div class="card-body">
+        <h5 class="fw-semibold">Documents</h5>
+        <p class="mb-0">Téléversez votre dossier administratif (Convention, Relevés, CV, ...).</p>
+        <div class="mt-3">
+          <a class="btn btn-warning" href="{% url 'student_documents' %}">Mes documents</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
