@@ -1,0 +1,63 @@
+{% extends "layouts/base_auth.html" %}
+{% load static %}
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<div class="login-simple">
+  <div class="login-card shadow-lg rounded-4">
+    <div class="login-card-body">
+      <a href="{% url 'role_select' %}" class="login-back">Retour</a>
+
+      <div class="login-role-icon">
+        {% if selected_role == "STUDENT" %}
+          <i class="bi bi-mortarboard"></i>
+        {% elif selected_role == "MOBILITY_MANAGER" %}
+          <i class="bi bi-person-badge"></i>
+        {% elif selected_role == "SCHOOL_ADMIN" %}
+          <i class="bi bi-journal-text"></i>
+        {% elif selected_role == "DIRECTOR" %}
+          <i class="bi bi-graph-up"></i>
+        {% elif selected_role == "PARTNER" %}
+          <i class="bi bi-people"></i>
+        {% else %}
+          <i class="bi bi-person-circle"></i>
+        {% endif %}
+      </div>
+
+      <h2 class="login-role-title">
+        {% if selected_role == "STUDENT" %}Etudiant
+        {% elif selected_role == "MOBILITY_MANAGER" %}Responsable Mobilite
+        {% elif selected_role == "SCHOOL_ADMIN" %}Scolarite
+        {% elif selected_role == "DIRECTOR" %}Direction
+        {% elif selected_role == "PARTNER" %}Partenaire
+        {% else %}Connexion
+        {% endif %}
+      </h2>
+
+      <p class="login-role-subtitle">Connectez-vous pour continuer</p>
+
+      <form method="post" class="mt-3">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Email</label>
+          {{ form.username }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Mot de passe</label>
+          {{ form.password }}
+        </div>
+
+        <button class="btn btn-ensias w-100 py-3 fw-bold" type="submit">
+          Se connecter
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

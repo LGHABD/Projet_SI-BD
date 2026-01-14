@@ -1,0 +1,54 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Calendrier{% endblock %}
+{% block topbar_subtitle %}Espace Etudiant{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_student.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_student.html" %}
+{% endblock %}
+
+{% block content %}
+  <div class="student-hero">
+    <div>
+      <h1>Calendrier</h1>
+      <p>Dates importantes des phases et echeances</p>
+    </div>
+  </div>
+
+  <div class="student-card">
+    <div class="student-card-header">
+      <h2>Phases</h2>
+    </div>
+    {% if phases %}
+      <div class="table-responsive">
+        <table class="table table-sm align-middle table-soft">
+          <thead>
+            <tr>
+              <th>Phase</th>
+              <th>Debut</th>
+              <th>Fin</th>
+              <th>Statut</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in phases %}
+              <tr>
+                <td>{{ p.nom }}</td>
+                <td>{{ p.date_debut|date:"d/m/Y" }}</td>
+                <td>{{ p.date_fin|date:"d/m/Y" }}</td>
+                <td><span class="badge text-bg-secondary">{{ p.statut }}</span></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-icon"><i class="bi bi-calendar3"></i></div>
+        <div class="empty-title">Aucune phase disponible</div>
+        <div class="empty-text">Les dates seront affichees des qu'elles sont publiees.</div>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

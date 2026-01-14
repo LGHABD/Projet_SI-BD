@@ -1,0 +1,93 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Places{% endblock %}
+{% block topbar_subtitle %}Espace Responsable Mobilite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Places & filieres</h2>
+  <p>Capacites par partenaire et filiere</p>
+</div>
+
+<div class="role-card">
+  <div class="role-card-header">
+    <h5 class="fw-semibold mb-0">Ajouter une place</h5>
+  </div>
+  <form method="post" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-3">{{ form.partenaire.label_tag }}{{ form.partenaire }}</div>
+    <div class="col-md-2">{{ form.filiere_ensias.label_tag }}{{ form.filiere_ensias }}</div>
+    <div class="col-md-2">{{ form.filiere_partenaire.label_tag }}{{ form.filiere_partenaire }}</div>
+    <div class="col-md-2">{{ form.annee.label_tag }}{{ form.annee }}</div>
+    <div class="col-md-2">{{ form.type_mobilite.label_tag }}{{ form.type_mobilite }}</div>
+    <div class="col-md-1">{{ form.nombre_places.label_tag }}{{ form.nombre_places }}</div>
+    <div class="col-md-2">
+      <label class="form-label d-block">Flechee</label>
+      <div class="form-check">{{ form.flechee }} <label class="form-check-label">Oui</label></div>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label d-block">Ouvert a tous</label>
+      <div class="form-check">{{ form.open_to_all }} <label class="form-check-label">Oui</label></div>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+      <button class="btn btn-primary w-100">Ajouter</button>
+    </div>
+  </form>
+</div>
+
+<div class="role-card">
+  <div class="table-responsive">
+    <table class="table table-sm align-middle table-soft">
+      <thead>
+        <tr>
+          <th>Partenaire</th>
+          <th>Filiere ENSIAS</th>
+          <th>Filiere partenaire</th>
+          <th>Annee</th>
+          <th>Type</th>
+          <th>Places</th>
+          <th>Flechee</th>
+          <th>Ouvert</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in places %}
+          <tr>
+            <td>{{ p.partenaire.nom }}</td>
+            <td>{{ p.filiere_ensias.nom }}</td>
+            <td>{{ p.filiere_partenaire }}</td>
+            <td>{{ p.annee }}</td>
+            <td>{{ p.type_mobilite }}</td>
+            <td>{{ p.nombre_places }}</td>
+            <td>
+              {% if p.flechee %}
+                <span class="badge text-bg-success">Oui</span>
+              {% else %}
+                <span class="badge text-bg-secondary">Non</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if p.open_to_all %}
+                <span class="badge text-bg-success">Oui</span>
+              {% else %}
+                <span class="badge text-bg-secondary">Non</span>
+              {% endif %}
+            </td>
+            <td class="text-end">
+              <a class="btn btn-sm btn-outline-primary" href="{% url 'manager_places_edit' p.id %}">Modifier</a>
+              <a class="btn btn-sm btn-outline-danger" href="{% url 'manager_places_delete' p.id %}">Supprimer</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="9" class="text-muted">Aucune place.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

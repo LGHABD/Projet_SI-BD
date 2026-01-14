@@ -1,0 +1,63 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Entretiens{% endblock %}
+{% block topbar_subtitle %}Espace Responsable Mobilite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Entretiens</h2>
+  <p>Planifier et enregistrer les decisions</p>
+</div>
+
+<div class="role-card">
+  {% for s in students %}
+    <div class="card-soft mb-3">
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <div>
+          <div class="fw-semibold">{{ s.user.get_full_name|default:s.user.email }}</div>
+          <div class="text-muted small">{{ s.filiere.nom }}</div>
+        </div>
+        {% if s.entretien %}
+          <span class="badge text-bg-secondary">{{ s.entretien.decision|default:"--" }}</span>
+        {% endif %}
+      </div>
+
+      <form method="post" class="row g-3">
+        {% csrf_token %}
+        <input type="hidden" name="student_id" value="{{ s.id }}">
+        <div class="col-md-3">
+          <label class="form-label">Date</label>
+          <input class="form-control" type="datetime-local" name="date_entretien"
+                 value="{% if s.entretien %}{{ s.entretien.date_entretien|date:'Y-m-d\TH:i' }}{% endif %}">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Decision</label>
+          <select class="form-select" name="decision">
+            <option value="">--</option>
+            {% for key, label in interview_choices %}
+              <option value="{{ key }}" {% if s.entretien and s.entretien.decision == key %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Motivation</label>
+          <input class="form-control" name="motivation" value="{% if s.entretien %}{{ s.entretien.motivation }}{% endif %}">
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Capacite financiere</label>
+          <input class="form-control" name="capacite_financiere" value="{% if s.entretien %}{{ s.entretien.capacite_financiere }}{% endif %}">
+        </div>
+        <div class="col-12 d-flex justify-content-end">
+          <button class="btn btn-ensias">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  {% empty %}
+    <div class="empty-state">Aucun etudiant.</div>
+  {% endfor %}
+</div>
+{% endblock %}

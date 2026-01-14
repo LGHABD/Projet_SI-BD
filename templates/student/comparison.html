@@ -1,0 +1,26 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Comparaison{% endblock %}
+{% block topbar_subtitle %}Espace Etudiant{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_student.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_student.html" %}
+{% endblock %}
+
+{% block content %}
+  <div class="student-hero">
+    <div>
+      <h1>Comparaison</h1>
+      <p>Comparez vos ecoles choisies (infos, pays, etc.)</p>
+    </div>
+  </div>
+
+  <div class="student-card">
+    <div class="empty-state">
+      <div class="empty-icon"><i class="bi bi-columns-gap"></i></div>
+      <div class="empty-title">Fonction en preparation</div>
+      <div class="empty-text">Nous ajouterons bientot une vue de comparaison (pays, ville, ...).</div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Supprimer partenaire{% endblock %}
+{% block topbar_subtitle %}Espace Responsable Mobilite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Supprimer partenaire</h2>
+  <p>Confirmer la suppression de ce partenaire</p>
+</div>
+
+<div class="role-card">
+  <p>Confirmer la suppression de <strong>{{ partner.nom }}</strong> ?</p>
+  <form method="post" class="d-flex gap-2">
+    {% csrf_token %}
+    <button class="btn btn-danger">Supprimer</button>
+    <a class="btn btn-outline-secondary" href="{% url 'manager_partners' %}">Annuler</a>
+  </form>
+</div>
+{% endblock %}

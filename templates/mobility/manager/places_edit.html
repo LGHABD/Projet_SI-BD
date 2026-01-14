@@ -1,0 +1,39 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Modifier place{% endblock %}
+{% block topbar_subtitle %}Espace Responsable Mobilite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Modifier place</h2>
+  <p>Actualiser les capacites et filieres</p>
+</div>
+
+<div class="role-card">
+  <form method="post" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-4">{{ form.partenaire.label_tag }}{{ form.partenaire }}</div>
+    <div class="col-md-2">{{ form.filiere_ensias.label_tag }}{{ form.filiere_ensias }}</div>
+    <div class="col-md-3">{{ form.filiere_partenaire.label_tag }}{{ form.filiere_partenaire }}</div>
+    <div class="col-md-2">{{ form.annee.label_tag }}{{ form.annee }}</div>
+    <div class="col-md-3">{{ form.type_mobilite.label_tag }}{{ form.type_mobilite }}</div>
+    <div class="col-md-2">{{ form.nombre_places.label_tag }}{{ form.nombre_places }}</div>
+    <div class="col-md-2">
+      <label class="form-label d-block">Flechee</label>
+      <div class="form-check">{{ form.flechee }} <label class="form-check-label">Oui</label></div>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label d-block">Ouvert a tous</label>
+      <div class="form-check">{{ form.open_to_all }} <label class="form-check-label">Oui</label></div>
+    </div>
+    <div class="col-12 d-flex gap-2">
+      <button class="btn btn-primary">Enregistrer</button>
+      <a class="btn btn-outline-secondary" href="{% url 'manager_places' %}">Retour</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

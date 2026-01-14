@@ -1,0 +1,79 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Liste etudiants{% endblock %}
+{% block topbar_subtitle %}Espace Direction{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_director.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_director.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Liste des etudiants</h2>
+  <p>Filtres par statut, filiere et partenaire</p>
+</div>
+
+<div class="role-card">
+  <form method="get" class="row g-3">
+    <div class="col-md-3">
+      <label class="form-label">Statut</label>
+      <select class="form-select" name="statut">
+        <option value="">Tous</option>
+        {% for key, label in students.model.Status.choices %}
+          <option value="{{ key }}" {% if filters.statut == key %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Filiere</label>
+      <select class="form-select" name="filiere">
+        <option value="">Toutes</option>
+        {% for f in filieres %}
+          <option value="{{ f.id }}" {% if filters.filiere == f.id|stringformat:"s" %}selected{% endif %}>{{ f.nom }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Partenaire</label>
+      <select class="form-select" name="partner">
+        <option value="">Tous</option>
+        {% for p in partners %}
+          <option value="{{ p.place__partenaire__id }}" {% if filters.partner == p.place__partenaire__id|stringformat:"s" %}selected{% endif %}>{{ p.place__partenaire__nom }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-1 d-flex align-items-end">
+      <button class="btn btn-primary w-100">Filtrer</button>
+    </div>
+  </form>
+</div>
+
+<div class="role-card">
+  <div class="table-responsive">
+    <table class="table table-sm align-middle table-soft">
+      <thead>
+        <tr>
+          <th>CNE</th>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Filiere</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in students %}
+          <tr>
+            <td>{{ s.cne }}</td>
+            <td>{{ s.user.get_full_name }}</td>
+            <td>{{ s.user.email }}</td>
+            <td>{{ s.filiere.nom }}</td>
+            <td><span class="badge text-bg-secondary">{{ s.statut }}</span></td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5" class="text-muted">Aucun etudiant.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+<nav class="app-nav">
+  <a class="{% if active_nav == 'dashboard' %}active{% endif %}" href="{% url 'manager_stats' %}"><i class="bi bi-speedometer2"></i>Dashboard</a>
+  <a class="{% if active_nav == 'partners' %}active{% endif %}" href="{% url 'manager_partners' %}"><i class="bi bi-buildings"></i>Partenaires</a>
+  <a class="{% if active_nav == 'places' %}active{% endif %}" href="{% url 'manager_places' %}"><i class="bi bi-geo-alt"></i>Places & filieres</a>
+  <a class="{% if active_nav == 'phases' %}active{% endif %}" href="{% url 'manager_phases' %}"><i class="bi bi-diagram-3"></i>Phases</a>
+  <a class="{% if active_nav == 'selection' %}active{% endif %}" href="{% url 'manager_run_selection' %}"><i class="bi bi-list-ol"></i>Selection</a>
+  <a class="{% if active_nav == 'desiderata' %}active{% endif %}" href="{% url 'manager_desiderata_validation' %}"><i class="bi bi-ui-checks"></i>Desiderata</a>
+  <a class="{% if active_nav == 'assign' %}active{% endif %}" href="{% url 'manager_run_fifo' %}"><i class="bi bi-arrow-down-up"></i>Affectation FIFO</a>
+  <a class="{% if active_nav == 'interviews' %}active{% endif %}" href="{% url 'manager_interviews' %}"><i class="bi bi-calendar-check"></i>Entretiens</a>
+  <a class="{% if active_nav == 'documents' %}active{% endif %}" href="{% url 'manager_documents' %}"><i class="bi bi-folder-check"></i>Dossiers</a>
+  <a class="{% if active_nav == 'notifications' %}active{% endif %}" href="{% url 'manager_notifications' %}"><i class="bi bi-send"></i>Notifications</a>
+</nav>

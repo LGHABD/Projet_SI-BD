@@ -1,0 +1,42 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Dossiers etudiants{% endblock %}
+{% block topbar_subtitle %}Espace Partenaire{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_partner.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_partner.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Dossiers etudiants</h2>
+  <p>Telecharger les pieces jointes</p>
+</div>
+
+<div class="role-card">
+  <div class="table-responsive">
+    <table class="table table-sm align-middle table-soft">
+      <thead>
+        <tr>
+          <th>Etudiant</th>
+          <th>Type</th>
+          <th>Fichier</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in docs %}
+          <tr>
+            <td>{{ d.student.user.get_full_name|default:d.student.user.email }}</td>
+            <td>{{ d.type_doc }}</td>
+            <td><a href="{{ d.fichier.url }}" target="_blank">Ouvrir</a></td>
+            <td>{{ d.date_upload|date:"d/m/Y H:i" }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="4" class="text-muted">Aucun document.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

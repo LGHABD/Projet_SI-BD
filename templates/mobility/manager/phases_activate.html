@@ -1,0 +1,24 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Activer phase{% endblock %}
+{% block topbar_subtitle %}Espace Responsable Mobilite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Activer phase</h2>
+  <p>Confirmer l'activation de la phase</p>
+</div>
+
+<div class="role-card">
+  <p>Confirmer l'activation de la phase <strong>{{ phase.nom }}</strong> ?</p>
+  <form method="post" class="d-flex gap-2">
+    {% csrf_token %}
+    <button class="btn btn-success">Activer</button>
+    <a class="btn btn-outline-secondary" href="{% url 'manager_phases' %}">Annuler</a>
+  </form>
+</div>
+{% endblock %}

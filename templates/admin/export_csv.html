@@ -1,0 +1,51 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Export CSV{% endblock %}
+{% block topbar_subtitle %}Espace Scolarite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_admin.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_admin.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Export CSV</h2>
+  <p>Filtres par statut, filiere et partenaire</p>
+</div>
+
+<div class="role-card">
+  <form method="post" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-3">
+      <label class="form-label">Statut</label>
+      <select class="form-select" name="statut">
+        <option value="">Tous</option>
+        <option value="ELIGIBLE">ELIGIBLE</option>
+        <option value="ASSIGNED">ASSIGNED</option>
+        <option value="ACCEPTED">ACCEPTED</option>
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Filiere</label>
+      <select class="form-select" name="filiere">
+        <option value="">Toutes</option>
+        {% for f in filieres %}
+          <option value="{{ f.id }}">{{ f.nom }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Partenaire</label>
+      <select class="form-select" name="partner">
+        <option value="">Tous</option>
+        {% for p in partners %}
+          <option value="{{ p.place__partenaire__id }}">{{ p.place__partenaire__nom }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-1 d-flex align-items-end">
+      <button class="btn btn-ensias w-100">Exporter</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

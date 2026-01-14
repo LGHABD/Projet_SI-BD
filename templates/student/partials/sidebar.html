@@ -1,0 +1,48 @@
+<nav class="student-nav">
+  <a class="student-nav-item {% if active_nav == 'dashboard' %}active{% endif %}" href="{% url 'home' %}">
+    <i class="bi bi-speedometer2"></i>
+    <span>Tableau de bord</span>
+  </a>
+
+  <a class="student-nav-item {% if active_nav == 'candidature' %}active{% endif %}" href="{% url 'student_candidature' %}">
+    <i class="bi bi-person-vcard"></i>
+    <span>Ma candidature</span>
+  </a>
+
+  <a class="student-nav-item {% if active_nav == 'desiderata' %}active{% endif %}" href="{% url 'student_desiderata' %}">
+    <i class="bi bi-list-check"></i>
+    <span>Mes desiderata</span>
+  </a>
+
+  <a class="student-nav-item {% if active_nav == 'documents' %}active{% endif %}" href="{% url 'student_documents' %}">
+    <i class="bi bi-cloud-upload"></i>
+    <span>Mes documents</span>
+  </a>
+
+  <a class="student-nav-item {% if active_nav == 'results' %}active{% endif %}" href="{% url 'student_results' %}">
+    <i class="bi bi-award"></i>
+    <span>Résultats</span>
+  </a>
+
+  <div class="student-nav-divider"></div>
+
+  <a class="student-nav-item {% if active_nav == 'calendar' %}active{% endif %}" href="{% url 'student_calendar' %}">
+    <i class="bi bi-calendar-event"></i>
+    <span>Calendrier</span>
+  </a>
+
+  <a class="student-nav-item {% if active_nav == 'comparison' %}active{% endif %}" href="{% url 'student_comparison' %}">
+    <i class="bi bi-bar-chart"></i>
+    <span>Comparaison</span>
+  </a>
+
+  <a class="student-nav-item {% if active_nav == 'messages' %}active{% endif %}" href="{% url 'student_messages' %}">
+    <i class="bi bi-chat-dots"></i>
+    <span>Messages</span>
+  </a>
+
+  <a class="student-nav-item {% if active_nav == 'chatbot' %}active{% endif %}" href="{% url 'student_chatbot' %}">
+    <i class="bi bi-robot"></i>
+    <span>Chatbot</span>
+  </a>
+</nav>

@@ -1,0 +1,6 @@
+<nav class="app-nav">
+  <a class="{% if active_nav == 'dashboard' %}active{% endif %}" href="{% url 'partner_dashboard' %}"><i class="bi bi-speedometer2"></i>Dashboard</a>
+  <a class="{% if active_nav == 'decisions' %}active{% endif %}" href="{% url 'partner_decisions' %}"><i class="bi bi-check2-circle"></i>Decisions</a>
+  <a class="{% if active_nav == 'documents' %}active{% endif %}" href="{% url 'partner_documents' %}"><i class="bi bi-folder2-open"></i>Dossiers</a>
+  <a class="{% if active_nav == 'messages' %}active{% endif %}" href="{% url 'partner_messages' %}"><i class="bi bi-chat-dots"></i>Messages</a>
+</nav>

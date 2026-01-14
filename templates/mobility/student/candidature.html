@@ -1,0 +1,54 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Ma candidature{% endblock %}
+{% block topbar_subtitle %}Espace Etudiant{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_student.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_student.html" %}
+{% endblock %}
+{% block content %}
+<div class="student-hero">
+  <div>
+    <h1>Ma candidature</h1>
+    <p>Informations personnelles et statut</p>
+  </div>
+</div>
+
+<div class="student-card">
+  <div class="student-card-header">
+    <h2>Statut</h2>
+    <span class="badge text-bg-primary">{{ student.statut|default:"--" }}</span>
+  </div>
+  {% if current_phase %}
+    <div class="alert alert-info rounded-4">
+      Phase actuelle: <strong>{{ current_phase.nom }}</strong>
+    </div>
+  {% endif %}
+</div>
+
+<div class="student-card">
+  <div class="student-card-header">
+    <h2>Profil</h2>
+  </div>
+  <div class="row g-3">
+    <div class="col-md-4"><div class="text-muted small">CNE</div><div class="fw-semibold">{{ student.cne|default:"--" }}</div></div>
+    <div class="col-md-4"><div class="text-muted small">Apogee</div><div class="fw-semibold">{{ student.code_apogee|default:"--" }}</div></div>
+    <div class="col-md-4"><div class="text-muted small">Filiere</div><div class="fw-semibold">{{ student.filiere.nom|default:"--" }}</div></div>
+    <div class="col-md-4"><div class="text-muted small">Email</div><div class="fw-semibold">{{ student.user.email|default:"--" }}</div></div>
+    <div class="col-md-4"><div class="text-muted small">Telephone</div><div class="fw-semibold">{{ student.telephone|default:"--" }}</div></div>
+  </div>
+</div>
+
+<div class="student-card">
+  <div class="student-card-header">
+    <h2>Actions rapides</h2>
+  </div>
+  <div class="quick-actions">
+    <a class="qa" href="{% url 'student_desiderata' %}"><i class="bi bi-list-check"></i><span>Desiderata</span></a>
+    <a class="qa" href="{% url 'student_documents' %}"><i class="bi bi-cloud-upload"></i><span>Documents</span></a>
+    <a class="qa" href="{% url 'student_results' %}"><i class="bi bi-clipboard-check"></i><span>Resultats</span></a>
+    <a class="qa" href="{% url 'password_change' %}"><i class="bi bi-shield-lock"></i><span>Mot de passe</span></a>
+  </div>
+</div>
+{% endblock %}

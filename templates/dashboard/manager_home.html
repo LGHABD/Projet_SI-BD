@@ -1,0 +1,61 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Dashboard Responsable{% endblock %}
+{% block topbar_subtitle %}Espace Responsable Mobilite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+
+{% block content %}
+  <div class="role-hero">
+    <h2>Tableau de bord</h2>
+    <p>Pilotez le processus de mobilite internationale</p>
+  </div>
+
+  <div class="role-kpi-grid mb-3">
+    <div class="role-kpi">
+      <div class="role-kpi-icon"><i class="bi bi-people"></i></div>
+      <div>
+        <div class="role-kpi-title">Etudiants</div>
+        <div class="role-kpi-value">{{ kpi.students|default:"--" }}</div>
+      </div>
+    </div>
+    <div class="role-kpi">
+      <div class="role-kpi-icon"><i class="bi bi-patch-check"></i></div>
+      <div>
+        <div class="role-kpi-title">Eligibles</div>
+        <div class="role-kpi-value">{{ kpi.eligible|default:"--" }}</div>
+      </div>
+    </div>
+    <div class="role-kpi">
+      <div class="role-kpi-icon"><i class="bi bi-check2-circle"></i></div>
+      <div>
+        <div class="role-kpi-title">Selectionnes</div>
+        <div class="role-kpi-value">{{ kpi.selected|default:"--" }}</div>
+      </div>
+    </div>
+    <div class="role-kpi">
+      <div class="role-kpi-icon"><i class="bi bi-flag"></i></div>
+      <div>
+        <div class="role-kpi-title">Affectes</div>
+        <div class="role-kpi-value">{{ kpi.assigned|default:"--" }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="role-card">
+    <div class="role-card-header">
+      <h5 class="mb-0">Actions rapides</h5>
+    </div>
+    <div class="role-actions">
+      <a class="role-action" href="{% url 'manager_run_selection' %}"><i class="bi bi-list-ol"></i>Selection</a>
+      <a class="role-action" href="{% url 'manager_run_fifo' %}"><i class="bi bi-arrow-down-up"></i>Affectation FIFO</a>
+      <a class="role-action" href="{% url 'manager_partners' %}"><i class="bi bi-buildings"></i>Partenaires</a>
+      <a class="role-action" href="{% url 'manager_phases' %}"><i class="bi bi-diagram-3"></i>Phases</a>
+      <a class="role-action" href="{% url 'manager_desiderata_validation' %}"><i class="bi bi-ui-checks"></i>Desiderata</a>
+      <a class="role-action" href="{% url 'manager_notifications' %}"><i class="bi bi-send"></i>Notifications</a>
+    </div>
+  </div>
+{% endblock %}

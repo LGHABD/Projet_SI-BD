@@ -1,0 +1,34 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Modifier partenaire{% endblock %}
+{% block topbar_subtitle %}Espace Responsable Mobilite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Modifier partenaire</h2>
+  <p>Mise a jour des informations de contact</p>
+</div>
+
+<div class="role-card">
+  <form method="post" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-4">{{ form.nom.label_tag }}{{ form.nom }}</div>
+    <div class="col-md-2">{{ form.pays.label_tag }}{{ form.pays }}</div>
+    <div class="col-md-2">{{ form.ville.label_tag }}{{ form.ville }}</div>
+    <div class="col-md-4">{{ form.email.label_tag }}{{ form.email }}</div>
+    <div class="col-md-4">{{ form.contact_name.label_tag }}{{ form.contact_name }}</div>
+    <div class="col-md-2">
+      <label class="form-label d-block">Actif</label>
+      <div class="form-check">{{ form.active }} <label class="form-check-label">Oui</label></div>
+    </div>
+    <div class="col-12 d-flex gap-2">
+      <button class="btn btn-primary">Enregistrer</button>
+      <a class="btn btn-outline-secondary" href="{% url 'manager_partners' %}">Retour</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

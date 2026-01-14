@@ -1,0 +1,49 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Messages{% endblock %}
+{% block topbar_subtitle %}Espace Etudiant{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_student.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_student.html" %}
+{% endblock %}
+
+{% block content %}
+  <div class="student-hero">
+    <div>
+      <h1>Messages</h1>
+      <p>Vos notifications et messages lies a votre candidature</p>
+    </div>
+  </div>
+
+  <div class="student-card">
+    {% if notifs %}
+      <div class="notif-list">
+        {% for n in notifs %}
+          <div class="notif-item {% if not n.is_read %}unread{% endif %}">
+            <div class="notif-dot"></div>
+            <div class="notif-body">
+              <div class="notif-title">{{ n.title }}</div>
+              <div class="notif-text">{{ n.message }}</div>
+              <div class="notif-meta">{{ n.date_envoi|date:"d/m/Y H:i" }}</div>
+            </div>
+            <div class="notif-actions">
+              {% if not n.is_read %}
+                <form method="post" action="{% url 'notif_read' n.id %}">
+                  {% csrf_token %}
+                  <button class="btn btn-sm btn-outline-primary">Marquer lu</button>
+                </form>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <div class="empty-icon"><i class="bi bi-chat-square-dots"></i></div>
+        <div class="empty-title">Aucun message</div>
+        <div class="empty-text">Vous serez notifie des qu'une mise a jour est disponible.</div>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

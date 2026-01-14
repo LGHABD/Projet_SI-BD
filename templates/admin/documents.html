@@ -1,0 +1,59 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Dossiers{% endblock %}
+{% block topbar_subtitle %}Espace Scolarite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_admin.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_admin.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Dossiers</h2>
+  <p>Validation des documents administratifs</p>
+</div>
+
+<div class="role-card">
+  <div class="table-responsive">
+    <table class="table table-sm align-middle table-soft">
+      <thead>
+        <tr>
+          <th>Etudiant</th>
+          <th>Type</th>
+          <th>Upload</th>
+          <th>Statut</th>
+          <th>Fichier</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in docs %}
+          <tr>
+            <td>{{ d.student.user.get_full_name|default:d.student.user.email }}</td>
+            <td>{{ d.type_doc }}</td>
+            <td>{{ d.date_upload|date:"d/m/Y H:i" }}</td>
+            <td><span class="badge text-bg-secondary">{{ d.statut_validation }}</span></td>
+            <td><a href="{{ d.fichier.url }}" target="_blank">Ouvrir</a></td>
+            <td class="text-end">
+              <form method="post" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="doc_id" value="{{ d.id }}">
+                <input type="hidden" name="status" value="VALID">
+                <button class="btn btn-sm btn-success">Valider</button>
+              </form>
+              <form method="post" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="doc_id" value="{{ d.id }}">
+                <input type="hidden" name="status" value="INVALID">
+                <button class="btn btn-sm btn-outline-danger">Refuser</button>
+              </form>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="6" class="text-muted">Aucun document.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

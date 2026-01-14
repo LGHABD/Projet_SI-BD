@@ -1,0 +1,83 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Messages{% endblock %}
+{% block topbar_subtitle %}Espace Partenaire{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_partner.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_partner.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Messages</h2>
+  <p>Notifications recues et aide rapide</p>
+</div>
+
+<div class="role-card">
+  <div class="table-responsive">
+    <table class="table table-sm align-middle table-soft">
+      <thead><tr><th>Date</th><th>Type</th><th>Titre</th><th>Message</th></tr></thead>
+      <tbody>
+        {% for n in notifs %}
+          <tr class="{% if not n.is_read %}table-warning{% endif %}">
+            <td>{{ n.date_envoi|date:"d/m/Y H:i" }}</td>
+            <td><span class="badge text-bg-secondary">{{ n.type_notif }}</span></td>
+            <td>{{ n.title }}</td>
+            <td>{{ n.message }}</td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="4" class="text-muted">Aucun message.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="role-card">
+  <h5 class="fw-semibold">Assistant partenaire</h5>
+  <div class="chatbot">
+    <div class="chatbot-messages" id="partnerChatMessages">
+      <div class="chat-msg bot"><div class="bubble">Bonjour. Je peux aider sur decisions, dossiers et calendrier.</div></div>
+    </div>
+    <form class="chatbot-input" id="partnerChatForm">
+      <input class="form-control" id="partnerChatInput" placeholder="Ecrivez votre message..." autocomplete="off" />
+      <button class="btn btn-primary" type="submit"><i class="bi bi-send"></i></button>
+    </form>
+  </div>
+</div>
+
+<script>
+  (function(){
+    const form = document.getElementById("partnerChatForm");
+    const input = document.getElementById("partnerChatInput");
+    const messages = document.getElementById("partnerChatMessages");
+    if(!form) return;
+
+    function addMsg(text, who){
+      const wrap = document.createElement("div");
+      wrap.className = `chat-msg ${who}`;
+      wrap.innerHTML = `<div class="bubble"></div>`;
+      wrap.querySelector(".bubble").textContent = text;
+      messages.appendChild(wrap);
+      messages.scrollTop = messages.scrollHeight;
+    }
+
+    function reply(msg){
+      const lower = msg.toLowerCase();
+      if(lower.includes("decision")) return "Renseignez la decision dans l'onglet Decisions avec la lettre reponse.";
+      if(lower.includes("dossier")) return "Telechargez les dossiers depuis l'onglet Dossiers.";
+      if(lower.includes("contact")) return "Contact ENSIAS: mobilite@ensias.ma.";
+      return "Je peux aider sur decisions, dossiers, contacts.";
+    }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const text = input.value.trim();
+      if(!text) return;
+      input.value = "";
+      addMsg(text, "user");
+      addMsg(reply(text), "bot");
+    });
+  })();
+</script>
+{% endblock %}

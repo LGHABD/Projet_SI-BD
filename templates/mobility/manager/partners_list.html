@@ -1,0 +1,78 @@
+{% extends "layouts/base_dashboard.html" %}
+{% block title %}Partenaires{% endblock %}
+{% block topbar_subtitle %}Espace Responsable Mobilite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Partenaires</h2>
+  <p>Gestion des partenaires actifs</p>
+</div>
+
+<div class="role-card">
+  <div class="role-card-header">
+    <h5 class="fw-semibold mb-0">Ajouter un partenaire</h5>
+  </div>
+  <form method="post" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-3">{{ form.nom.label_tag }}{{ form.nom }}</div>
+    <div class="col-md-2">{{ form.pays.label_tag }}{{ form.pays }}</div>
+    <div class="col-md-2">{{ form.ville.label_tag }}{{ form.ville }}</div>
+    <div class="col-md-3">{{ form.email.label_tag }}{{ form.email }}</div>
+    <div class="col-md-2">{{ form.contact_name.label_tag }}{{ form.contact_name }}</div>
+    <div class="col-md-2">
+      <label class="form-label d-block">Actif</label>
+      <div class="form-check">{{ form.active }} <label class="form-check-label">Oui</label></div>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+      <button class="btn btn-primary w-100">Ajouter</button>
+    </div>
+  </form>
+</div>
+
+<div class="role-card">
+  <div class="table-responsive">
+    <table class="table table-sm align-middle">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Pays</th>
+          <th>Ville</th>
+          <th>Email</th>
+          <th>Contact</th>
+          <th>Actif</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in partners %}
+          <tr>
+            <td>{{ p.nom }}</td>
+            <td>{{ p.pays }}</td>
+            <td>{{ p.ville }}</td>
+            <td>{{ p.email }}</td>
+            <td>{{ p.contact_name }}</td>
+            <td>
+              {% if p.active %}
+                <span class="badge text-bg-success">Oui</span>
+              {% else %}
+                <span class="badge text-bg-secondary">Non</span>
+              {% endif %}
+            </td>
+            <td class="text-end">
+              <a class="btn btn-sm btn-outline-primary" href="{% url 'manager_partners_edit' p.id %}">Modifier</a>
+              <a class="btn btn-sm btn-outline-danger" href="{% url 'manager_partners_delete' p.id %}">Supprimer</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="7" class="text-muted">Aucun partenaire.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,72 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Decisions{% endblock %}
+{% block topbar_subtitle %}Espace Partenaire{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_partner.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_partner.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Decisions partenaires</h2>
+  <p>Saisir la decision finale et la lettre reponse</p>
+</div>
+
+<div class="role-card">
+  <div class="table-responsive">
+    <table class="table table-sm align-middle table-soft">
+      <thead>
+        <tr>
+          <th>Etudiant</th>
+          <th>Filiere</th>
+          <th>Type</th>
+          <th>Decision</th>
+          <th>Lettre</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+          {% with a=row.affectation decision=row.decision %}
+          <tr>
+            <td>{{ a.student.user.get_full_name|default:a.student.user.email }}</td>
+            <td>{{ a.student.filiere.nom }}</td>
+            <td>{{ a.place.type_mobilite }}</td>
+            <td>
+              {% if decision %}
+                <span class="badge text-bg-secondary">{{ decision.resultat }}</span>
+              {% else %}
+                <span class="text-muted">--</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if decision and decision.lettre_reponse %}
+                <a href="{{ decision.lettre_reponse.url }}" target="_blank">Lettre</a>
+              {% else %}
+                <span class="text-muted">--</span>
+              {% endif %}
+            </td>
+            <td class="text-end">
+              <form method="post" enctype="multipart/form-data" class="d-flex gap-2 justify-content-end">
+                {% csrf_token %}
+                <input type="hidden" name="affectation_id" value="{{ a.id }}">
+                <select class="form-select form-select-sm" name="decision">
+                  <option value="">--</option>
+                  <option value="ACCEPTED" {% if decision and decision.resultat == "ACCEPTED" %}selected{% endif %}>ACCEPTER</option>
+                  <option value="REFUSED" {% if decision and decision.resultat == "REFUSED" %}selected{% endif %}>REFUSER</option>
+                </select>
+                <input class="form-control form-control-sm" type="file" name="lettre_reponse">
+                <button class="btn btn-sm btn-primary">Enregistrer</button>
+              </form>
+            </td>
+          </tr>
+          {% endwith %}
+        {% empty %}
+          <tr><td colspan="6" class="text-muted">Aucune affectation.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

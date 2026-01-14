@@ -1,0 +1,52 @@
+﻿{% extends "layouts/base_auth.html" %}
+{% load static %}
+{% block title %}Selection du profil{% endblock %}
+
+{% block content %}
+<div class="role-page">
+  <div class="role-hero">
+    <div class="role-hero-brand">
+      <img src="{% static 'img/ensias-logo.jpg' %}" alt="ENSIAS" class="role-hero-logo" />
+      <span>ENSIAS</span>
+    </div>
+    <h1>Gestion de la Mobilite Internationale</h1>
+    <p>Plateforme de gestion complete du processus de mobilite</p>
+  </div>
+
+  <div class="role-panel">
+    <div class="role-panel-title">Selectionnez votre profil</div>
+
+    <div class="role-grid">
+      <a class="role-card role-student" href="{% url 'login' %}?role=STUDENT">
+        <div class="role-card-icon"><i class="bi bi-mortarboard"></i></div>
+        <div class="role-card-title">Etudiant</div>
+        <div class="role-card-subtitle">Gerer ma candidature et mes desiderata</div>
+      </a>
+
+      <a class="role-card role-manager" href="{% url 'login' %}?role=MOBILITY_MANAGER">
+        <div class="role-card-icon"><i class="bi bi-person-badge"></i></div>
+        <div class="role-card-title">Responsable Mobilite</div>
+        <div class="role-card-subtitle">Gerer le processus de mobilite</div>
+      </a>
+
+      <a class="role-card role-admin" href="{% url 'login' %}?role=SCHOOL_ADMIN">
+        <div class="role-card-icon"><i class="bi bi-journal-text"></i></div>
+        <div class="role-card-title">Administration (Scolarite)</div>
+        <div class="role-card-subtitle">Gestion des comptes et documents</div>
+      </a>
+
+      <a class="role-card role-director" href="{% url 'login' %}?role=DIRECTOR">
+        <div class="role-card-icon"><i class="bi bi-graph-up-arrow"></i></div>
+        <div class="role-card-title">Direction</div>
+        <div class="role-card-subtitle">Tableaux de bord et statistiques</div>
+      </a>
+
+      <a class="role-card role-partner role-card-wide" href="{% url 'login' %}?role=PARTNER">
+        <div class="role-card-icon"><i class="bi bi-people"></i></div>
+        <div class="role-card-title">Partenaire</div>
+        <div class="role-card-subtitle">Consultation et decision sur les etudiants</div>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Modifier phase{% endblock %}
+{% block topbar_subtitle %}Espace Responsable Mobilite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Modifier phase</h2>
+  <p>Actualiser le calendrier et l'ordre</p>
+</div>
+
+<div class="role-card">
+  <form method="post" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-4">{{ form.nom.label_tag }}{{ form.nom }}</div>
+    <div class="col-md-2">{{ form.date_debut.label_tag }}{{ form.date_debut }}</div>
+    <div class="col-md-2">{{ form.date_fin.label_tag }}{{ form.date_fin }}</div>
+    <div class="col-md-2">{{ form.statut.label_tag }}{{ form.statut }}</div>
+    <div class="col-md-2">{{ form.ordre.label_tag }}{{ form.ordre }}</div>
+    <div class="col-12 d-flex gap-2">
+      <button class="btn btn-primary">Enregistrer</button>
+      <a class="btn btn-outline-secondary" href="{% url 'manager_phases' %}">Retour</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

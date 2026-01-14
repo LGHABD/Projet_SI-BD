@@ -1,0 +1,63 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Tableau de bord Etudiant{% endblock %}
+{% block topbar_subtitle %}Espace Etudiant{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_student.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_student.html" %}
+{% endblock %}
+
+{% block content %}
+  <div class="student-hero">
+    <div>
+      <h1>Bienvenue, {{ user.first_name|default:"Etudiant" }}</h1>
+      <p>Acces rapide a votre candidature ENSIAS Mobilite</p>
+    </div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-slim">
+      <div class="kpi-slim-left">
+        <div class="kpi-slim-icon"><i class="bi bi-person-vcard"></i></div>
+        <div>
+          <div class="kpi-slim-title">Profil</div>
+          <div class="kpi-slim-sub">Informations personnelles</div>
+        </div>
+      </div>
+      <div class="kpi-slim-value">Voir</div>
+    </div>
+    <div class="kpi-slim">
+      <div class="kpi-slim-left">
+        <div class="kpi-slim-icon"><i class="bi bi-list-check"></i></div>
+        <div>
+          <div class="kpi-slim-title">Desiderata</div>
+          <div class="kpi-slim-sub">Choix et classement</div>
+        </div>
+      </div>
+      <div class="kpi-slim-value">{{ nb_desiderata|default:"--" }}</div>
+    </div>
+    <div class="kpi-slim">
+      <div class="kpi-slim-left">
+        <div class="kpi-slim-icon"><i class="bi bi-cloud-upload"></i></div>
+        <div>
+          <div class="kpi-slim-title">Documents</div>
+          <div class="kpi-slim-sub">Depot du dossier</div>
+        </div>
+      </div>
+      <div class="kpi-slim-value">{{ docs_done|default:0 }}/{{ docs_required|default:0 }}</div>
+    </div>
+  </div>
+
+  <div class="student-card">
+    <div class="student-card-header">
+      <h2>Actions rapides</h2>
+    </div>
+    <div class="quick-actions">
+      <a class="qa" href="{% url 'student_candidature' %}"><i class="bi bi-person-vcard"></i><span>Ma candidature</span></a>
+      <a class="qa" href="{% url 'student_desiderata' %}"><i class="bi bi-list-check"></i><span>Mes desiderata</span></a>
+      <a class="qa" href="{% url 'student_documents' %}"><i class="bi bi-cloud-upload"></i><span>Mes documents</span></a>
+      <a class="qa" href="{% url 'student_messages' %}"><i class="bi bi-chat-dots"></i><span>Messages</span></a>
+    </div>
+  </div>
+{% endblock %}

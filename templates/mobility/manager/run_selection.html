@@ -1,0 +1,37 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Lancer la selection{% endblock %}
+{% block topbar_subtitle %}Espace Responsable Mobilite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Selection - Classement</h2>
+  <p>Calcul des notes et classement des etudiants eligibles</p>
+</div>
+
+<div class="role-card">
+  <div class="role-card-header">
+    <h5 class="mb-0">Parametres de selection</h5>
+  </div>
+
+  <form method="post" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-4">
+      <label class="form-label">Annee universitaire</label>
+      <input class="form-control" name="annee_univ" value="2024/2025">
+    </div>
+    <div class="col-md-8 d-flex align-items-end">
+      <button class="btn btn-ensias fw-semibold">Lancer classement</button>
+    </div>
+  </form>
+
+  <hr>
+  <p class="mb-0 text-muted small">
+    Parametres: seuil1=12.5, poids commun=0.8, poids specifique=0.2.
+  </p>
+</div>
+{% endblock %}

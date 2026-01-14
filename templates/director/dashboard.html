@@ -1,0 +1,71 @@
+{% extends "layouts/base_dashboard.html" %}
+{% block title %}Dashboard Direction{% endblock %}
+{% block topbar_subtitle %}Espace Direction{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_director.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_director.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Dashboard Direction</h2>
+  <p>KPIs globaux et vision multi-filiere</p>
+</div>
+
+<div class="role-kpi-grid mb-3">
+  <div class="role-kpi">
+    <div class="role-kpi-icon"><i class="bi bi-people"></i></div>
+    <div>
+      <div class="role-kpi-title">Etudiants</div>
+      <div class="role-kpi-value">{{ kpi.students }}</div>
+    </div>
+  </div>
+  <div class="role-kpi">
+    <div class="role-kpi-icon"><i class="bi bi-patch-check"></i></div>
+    <div>
+      <div class="role-kpi-title">Eligibles</div>
+      <div class="role-kpi-value">{{ kpi.eligible }}</div>
+    </div>
+  </div>
+  <div class="role-kpi">
+    <div class="role-kpi-icon"><i class="bi bi-check2-circle"></i></div>
+    <div>
+      <div class="role-kpi-title">Affectes</div>
+      <div class="role-kpi-value">{{ kpi.assigned }}</div>
+    </div>
+  </div>
+  <div class="role-kpi">
+    <div class="role-kpi-icon"><i class="bi bi-award"></i></div>
+    <div>
+      <div class="role-kpi-title">Acceptes</div>
+      <div class="role-kpi-value">{{ kpi.accepted }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="role-card">
+  <div class="row g-3">
+    <div class="col-md-6">
+      <h5 class="fw-semibold">Par filiere</h5>
+      <ul class="mb-0">
+        {% for row in by_filiere %}
+          <li>{{ row.filiere__nom }} : <b>{{ row.n }}</b></li>
+        {% empty %}
+          <li class="text-muted">Aucune donnee.</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h5 class="fw-semibold">Par partenaire</h5>
+      <ul class="mb-0">
+        {% for row in by_partner %}
+          <li>{{ row.place__partenaire__nom }} : <b>{{ row.n }}</b></li>
+        {% empty %}
+          <li class="text-muted">Aucune donnee.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

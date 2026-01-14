@@ -1,0 +1,58 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Dashboard Direction{% endblock %}
+{% block topbar_subtitle %}Espace Direction{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_director.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_director.html" %}
+{% endblock %}
+
+{% block content %}
+  <div class="role-hero">
+    <h2>Dashboard Direction</h2>
+    <p>Vue globale des indicateurs et export des rapports</p>
+  </div>
+
+  <div class="role-kpi-grid mb-3">
+    <div class="role-kpi">
+      <div class="role-kpi-icon"><i class="bi bi-people"></i></div>
+      <div>
+        <div class="role-kpi-title">Etudiants</div>
+        <div class="role-kpi-value">{{ kpi.students|default:"--" }}</div>
+      </div>
+    </div>
+    <div class="role-kpi">
+      <div class="role-kpi-icon"><i class="bi bi-patch-check"></i></div>
+      <div>
+        <div class="role-kpi-title">Eligibles</div>
+        <div class="role-kpi-value">{{ kpi.eligible|default:"--" }}</div>
+      </div>
+    </div>
+    <div class="role-kpi">
+      <div class="role-kpi-icon"><i class="bi bi-award"></i></div>
+      <div>
+        <div class="role-kpi-title">Acceptes</div>
+        <div class="role-kpi-value">{{ kpi.accepted|default:"--" }}</div>
+      </div>
+    </div>
+    <div class="role-kpi">
+      <div class="role-kpi-icon"><i class="bi bi-geo-alt"></i></div>
+      <div>
+        <div class="role-kpi-title">Partenaires</div>
+        <div class="role-kpi-value">{{ kpi.partners|default:"--" }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="role-card">
+    <div class="role-card-header">
+      <h5 class="mb-0">Actions rapides</h5>
+    </div>
+    <div class="role-actions">
+      <a class="role-action" href="{% url 'director_students' %}"><i class="bi bi-funnel"></i>Liste et filtres</a>
+      <a class="role-action" href="{% url 'director_export' %}"><i class="bi bi-download"></i>Exporter rapports</a>
+      <a class="role-action" href="{% url 'director_dashboard' %}"><i class="bi bi-bar-chart"></i>KPIs globaux</a>
+    </div>
+  </div>
+{% endblock %}

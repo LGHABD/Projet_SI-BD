@@ -1,0 +1,84 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% load static %}
+{% block title %}Chatbot{% endblock %}
+{% block topbar_subtitle %}Espace Etudiant{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_student.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_student.html" %}
+{% endblock %}
+
+{% block content %}
+  <div class="student-hero">
+    <div>
+      <h1>Assistant ENSIAS</h1>
+      <p>Posez une question rapide sur votre candidature, documents ou phases</p>
+    </div>
+  </div>
+
+  <div class="student-card">
+    <div class="chatbot">
+      <div class="chatbot-messages" id="chatMessages">
+        <div class="chat-msg bot">
+          <div class="bubble">
+            Bonjour, je suis l'assistant ENSIAS. Exemple: "Quelle est ma phase actuelle ?"
+          </div>
+        </div>
+      </div>
+
+      <form class="chatbot-input" id="chatForm">
+        {% csrf_token %}
+        <input class="form-control" id="chatInput" placeholder="Ecrivez votre message..." autocomplete="off" />
+        <button class="btn btn-primary" type="submit">
+          <i class="bi bi-send"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const form = document.getElementById('chatForm');
+      const input = document.getElementById('chatInput');
+      const messages = document.getElementById('chatMessages');
+
+      function addMsg(text, who){
+        const wrap = document.createElement('div');
+        wrap.className = `chat-msg ${who}`;
+        wrap.innerHTML = `<div class="bubble"></div>`;
+        wrap.querySelector('.bubble').textContent = text;
+        messages.appendChild(wrap);
+        messages.scrollTop = messages.scrollHeight;
+      }
+
+      function getCsrf(){
+        const el = form.querySelector('input[name=csrfmiddlewaretoken]');
+        return el ? el.value : '';
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const text = input.value.trim();
+        if(!text) return;
+        input.value = '';
+        addMsg(text, 'user');
+
+        try{
+          const resp = await fetch("{% url 'student_chatbot_api' %}", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'X-CSRFToken': getCsrf(),
+            },
+            body: JSON.stringify({message: text})
+          });
+          const data = await resp.json();
+          addMsg(data.reply || data.answer || "Desole, je n'ai pas compris.", 'bot');
+        }catch(err){
+          addMsg("Erreur de connexion. Reessayez.", 'bot');
+        }
+      });
+    })();
+  </script>
+{% endblock %}

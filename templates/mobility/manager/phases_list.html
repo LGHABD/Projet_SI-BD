@@ -1,0 +1,66 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Phases{% endblock %}
+{% block topbar_subtitle %}Espace Responsable Mobilite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Planification des phases</h2>
+  <p>Ouverture, fermeture et calendrier</p>
+</div>
+
+<div class="role-card">
+  <div class="role-card-header">
+    <h5 class="fw-semibold mb-0">Ajouter une phase</h5>
+  </div>
+  <form method="post" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-4">{{ form.nom.label_tag }}{{ form.nom }}</div>
+    <div class="col-md-2">{{ form.date_debut.label_tag }}{{ form.date_debut }}</div>
+    <div class="col-md-2">{{ form.date_fin.label_tag }}{{ form.date_fin }}</div>
+    <div class="col-md-2">{{ form.statut.label_tag }}{{ form.statut }}</div>
+    <div class="col-md-2">{{ form.ordre.label_tag }}{{ form.ordre }}</div>
+    <div class="col-md-2 d-flex align-items-end">
+      <button class="btn btn-primary w-100">Ajouter</button>
+    </div>
+  </form>
+</div>
+
+<div class="role-card">
+  <div class="table-responsive">
+    <table class="table table-sm align-middle table-soft">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Debut</th>
+          <th>Fin</th>
+          <th>Statut</th>
+          <th>Ordre</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in phases %}
+          <tr>
+            <td>{{ p.nom }}</td>
+            <td>{{ p.date_debut }}</td>
+            <td>{{ p.date_fin }}</td>
+            <td><span class="badge text-bg-secondary">{{ p.statut }}</span></td>
+            <td>{{ p.ordre }}</td>
+            <td class="text-end">
+              <a class="btn btn-sm btn-outline-primary" href="{% url 'manager_phases_edit' p.id %}">Modifier</a>
+              <a class="btn btn-sm btn-outline-success" href="{% url 'manager_phases_activate' p.id %}">Activer</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="6" class="text-muted">Aucune phase.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Dashboard Partenaire{% endblock %}
+{% block topbar_subtitle %}Espace Partenaire{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_partner.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_partner.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Dashboard Partenaire</h2>
+  <p>Suivi des affectations et decisions en temps reel</p>
+</div>
+
+<div class="role-card">
+  <div class="role-actions">
+    <a class="role-action" href="{% url 'partner_decisions' %}"><i class="bi bi-check2-circle"></i>Decisions</a>
+    <a class="role-action" href="{% url 'partner_documents' %}"><i class="bi bi-folder2-open"></i>Dossiers</a>
+    <a class="role-action" href="{% url 'partner_messages' %}"><i class="bi bi-chat-dots"></i>Messages</a>
+  </div>
+</div>
+
+<div class="role-kpi-grid mb-3">
+  <div class="role-kpi">
+    <div class="role-kpi-icon"><i class="bi bi-people"></i></div>
+    <div>
+      <div class="role-kpi-title">Affectes</div>
+      <div class="role-kpi-value">{{ kpi.assigned|default:"--" }}</div>
+    </div>
+  </div>
+  <div class="role-kpi">
+    <div class="role-kpi-icon"><i class="bi bi-check2-circle"></i></div>
+    <div>
+      <div class="role-kpi-title">Acceptes</div>
+      <div class="role-kpi-value">{{ kpi.accepted|default:"--" }}</div>
+    </div>
+  </div>
+  <div class="role-kpi">
+    <div class="role-kpi-icon"><i class="bi bi-x-circle"></i></div>
+    <div>
+      <div class="role-kpi-title">Refuses</div>
+      <div class="role-kpi-value">{{ kpi.refused|default:"--" }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="role-card">
+  <div class="table-responsive">
+    <table class="table table-sm align-middle table-soft">
+      <thead>
+        <tr>
+          <th>Etudiant</th>
+          <th>Filiere</th>
+          <th>Type</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for a in affectations %}
+          <tr>
+            <td>{{ a.student.user.get_full_name|default:a.student.user.email }}</td>
+            <td>{{ a.student.filiere.nom }}</td>
+            <td>{{ a.place.type_mobilite }}</td>
+            <td><span class="badge text-bg-secondary">{{ a.statut }}</span></td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="4" class="text-muted">Aucune affectation.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,75 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Notifications{% endblock %}
+{% block sidebar_content %}
+  {% if user.role == "STUDENT" %}
+    {% include "layouts/sidebar_student.html" %}
+  {% elif user.role == "MOBILITY_MANAGER" %}
+    {% include "layouts/sidebar_manager.html" %}
+  {% elif user.role == "SCHOOL_ADMIN" %}
+    {% include "layouts/sidebar_admin.html" %}
+  {% elif user.role == "DIRECTOR" %}
+    {% include "layouts/sidebar_director.html" %}
+  {% elif user.role == "PARTNER" %}
+    {% include "layouts/sidebar_partner.html" %}
+  {% endif %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% if user.role == "STUDENT" %}
+    {% include "layouts/sidebar_student.html" %}
+  {% elif user.role == "MOBILITY_MANAGER" %}
+    {% include "layouts/sidebar_manager.html" %}
+  {% elif user.role == "SCHOOL_ADMIN" %}
+    {% include "layouts/sidebar_admin.html" %}
+  {% elif user.role == "DIRECTOR" %}
+    {% include "layouts/sidebar_director.html" %}
+  {% elif user.role == "PARTNER" %}
+    {% include "layouts/sidebar_partner.html" %}
+  {% endif %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Notifications</h2>
+  <p>Tous vos messages internes</p>
+</div>
+
+<div class="role-card">
+  <div class="role-card-header">
+    <div class="d-flex gap-2">
+      <span class="badge-status text-bg-secondary">Tous</span>
+      <span class="badge-status text-bg-warning">Non lus</span>
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-sm align-middle table-soft">
+      <thead>
+        <tr><th>Date</th><th>Type</th><th>Titre</th><th>Message</th><th></th></tr>
+      </thead>
+      <tbody>
+        {% for n in notifs %}
+          <tr>
+            <td>{{ n.date_envoi|date:"d/m/Y H:i" }}</td>
+            <td><span class="badge text-bg-secondary">{{ n.type_notif }}</span></td>
+            <td><strong>{{ n.title }}</strong></td>
+            <td>{{ n.message }}</td>
+            <td class="text-end">
+              {% if not n.is_read %}
+                <a class="btn btn-sm btn-outline-dark" href="{% url 'notif_read' n.id %}">Marquer comme lu</a>
+              {% endif %}
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5">
+              <div class="empty-state">
+                <div class="fw-bold">Aucune notification</div>
+                <div>Vous etes a jour.</div>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

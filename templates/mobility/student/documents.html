@@ -1,0 +1,76 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Mes documents{% endblock %}
+{% block topbar_subtitle %}Espace Etudiant{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_student.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_student.html" %}
+{% endblock %}
+{% block content %}
+<div class="student-hero">
+  <div>
+    <h1>Mes documents</h1>
+    <p>Televersez votre dossier et suivez la validation</p>
+  </div>
+</div>
+
+<div class="student-card">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <div class="fw-semibold">Progression du dossier</div>
+    <div class="text-muted small">{{ docs_done|default:0 }}/{{ docs_required|default:0 }}</div>
+  </div>
+  <div class="progress" role="progressbar" aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar bg-success" style="width: {{ progress }}%">{{ progress }}%</div>
+  </div>
+</div>
+
+<div class="student-card">
+  <div class="student-card-header">
+    <h2>Uploader un document</h2>
+  </div>
+  <form method="post" enctype="multipart/form-data" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-4">
+      <label class="form-label">Type document</label>
+      <select class="form-select" name="type_doc">
+        <option value="CONVENTION">Convention</option>
+        <option value="RELEVES">Releves</option>
+        <option value="CV">CV</option>
+        <option value="LETTRE_MOTIV">Lettre de motivation</option>
+        <option value="AUTRE">Autre</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Fichier</label>
+      <input class="form-control" type="file" name="fichier" required>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+      <button class="btn btn-warning w-100 fw-semibold">Upload</button>
+    </div>
+  </form>
+</div>
+
+<div class="student-card">
+  <div class="student-card-header">
+    <h2>Historique</h2>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-sm align-middle table-soft">
+      <thead><tr><th>Date</th><th>Type</th><th>Statut</th><th>Fichier</th></tr></thead>
+      <tbody>
+        {% for d in docs %}
+          <tr>
+            <td>{{ d.date_upload }}</td>
+            <td>{{ d.type_doc }}</td>
+            <td><span class="badge text-bg-secondary">{{ d.statut_validation }}</span></td>
+            <td><a href="{{ d.fichier.url }}" target="_blank">Ouvrir</a></td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="4" class="text-muted">Aucun document.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

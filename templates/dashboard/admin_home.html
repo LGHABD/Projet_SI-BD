@@ -1,0 +1,59 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Dashboard Scolarite{% endblock %}
+{% block topbar_subtitle %}Espace Scolarite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_admin.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_admin.html" %}
+{% endblock %}
+
+{% block content %}
+  <div class="role-hero">
+    <h2>Dashboard Scolarite</h2>
+    <p>Import, export et suivi des dossiers</p>
+  </div>
+
+  <div class="role-kpi-grid mb-3">
+    <div class="role-kpi">
+      <div class="role-kpi-icon"><i class="bi bi-people"></i></div>
+      <div>
+        <div class="role-kpi-title">Etudiants</div>
+        <div class="role-kpi-value">{{ kpi.students|default:"--" }}</div>
+      </div>
+    </div>
+    <div class="role-kpi">
+      <div class="role-kpi-icon"><i class="bi bi-folder2-open"></i></div>
+      <div>
+        <div class="role-kpi-title">Dossiers</div>
+        <div class="role-kpi-value">{{ kpi.documents|default:"--" }}</div>
+      </div>
+    </div>
+    <div class="role-kpi">
+      <div class="role-kpi-icon"><i class="bi bi-check2-circle"></i></div>
+      <div>
+        <div class="role-kpi-title">Valides</div>
+        <div class="role-kpi-value">{{ kpi.valid|default:"--" }}</div>
+      </div>
+    </div>
+    <div class="role-kpi">
+      <div class="role-kpi-icon"><i class="bi bi-exclamation-triangle"></i></div>
+      <div>
+        <div class="role-kpi-title">En attente</div>
+        <div class="role-kpi-value">{{ kpi.pending|default:"--" }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="role-card">
+    <div class="role-card-header">
+      <h5 class="mb-0">Actions rapides</h5>
+    </div>
+    <div class="role-actions">
+      <a class="role-action" href="{% url 'school_admin_import' %}"><i class="bi bi-upload"></i>Importer CSV</a>
+      <a class="role-action" href="{% url 'school_admin_export' %}"><i class="bi bi-download"></i>Exporter CSV</a>
+      <a class="role-action" href="{% url 'school_admin_documents' %}"><i class="bi bi-folder-check"></i>Dossiers</a>
+      <a class="role-action" href="{% url 'school_admin_dashboard' %}"><i class="bi bi-speedometer2"></i>Dashboard</a>
+    </div>
+  </div>
+{% endblock %}

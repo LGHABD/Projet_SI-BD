@@ -1,0 +1,31 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Notifications{% endblock %}
+{% block topbar_subtitle %}Espace Responsable Mobilite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Notifications</h2>
+  <p>Envoyer un message aux etudiants ou partenaires</p>
+</div>
+
+<div class="role-card">
+  <form method="post" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-4">{{ form.recipient_role.label_tag }}{{ form.recipient_role }}</div>
+    <div class="col-md-8">{{ form.title.label_tag }}{{ form.title }}</div>
+    <div class="col-md-12">{{ form.body.label_tag }}{{ form.body }}</div>
+    <div class="col-md-4">
+      <label class="form-label d-block">Email</label>
+      <div class="form-check">{{ form.send_email }} <label class="form-check-label">Envoyer email</label></div>
+    </div>
+    <div class="col-md-4 d-flex align-items-end">
+      <button class="btn btn-ensias w-100">Envoyer</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

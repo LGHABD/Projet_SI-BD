@@ -1,0 +1,69 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Validation desiderata{% endblock %}
+{% block topbar_subtitle %}Espace Responsable Mobilite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_manager.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Validation des desiderata</h2>
+  <p>Controle et validation des choix</p>
+</div>
+
+<div class="role-card">
+  <div class="table-responsive">
+    <table class="table table-sm align-middle table-soft">
+      <thead>
+        <tr>
+          <th>Etudiant</th>
+          <th>Filiere</th>
+          <th>Statut</th>
+          <th>Choix</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in desideratas %}
+          <tr>
+            <td>{{ d.student.user.get_full_name|default:d.student.user.email }}</td>
+            <td>{{ d.student.filiere.nom }}</td>
+            <td><span class="badge text-bg-secondary">{{ d.statut }}</span></td>
+            <td>
+              {% for c in d.choices.all %}
+                <div>#{{ c.rank }} - {{ c.place.partenaire.nom }} ({{ c.place.type_mobilite }})</div>
+              {% empty %}
+                <span class="text-muted">Aucun choix</span>
+              {% endfor %}
+            </td>
+            <td class="text-end">
+              <form method="post" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="desiderata_id" value="{{ d.id }}">
+                <input type="hidden" name="action" value="VALID">
+                <button class="btn btn-sm btn-success">Valider</button>
+              </form>
+              <form method="post" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="desiderata_id" value="{{ d.id }}">
+                <input type="hidden" name="action" value="INVALID">
+                <button class="btn btn-sm btn-outline-danger">Refuser</button>
+              </form>
+              <form method="post" class="d-inline">
+                {% csrf_token %}
+                <input type="hidden" name="desiderata_id" value="{{ d.id }}">
+                <input type="hidden" name="action" value="RECTIFICATION">
+                <button class="btn btn-sm btn-outline-secondary">Rectifier</button>
+              </form>
+            </td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="5" class="text-muted">Aucun desiderata.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

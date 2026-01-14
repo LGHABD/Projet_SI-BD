@@ -1,0 +1,78 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>{% block title %}Espace Scolarite{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link href="{% static 'css/app.css' %}" rel="stylesheet">
+</head>
+<body class="role-shell role-admin">
+  <header class="role-topbar">
+    <div class="role-brand">
+      <img src="{% static 'img/ensias-logo.jpg' %}" alt="ENSIAS" />
+      <div>
+        <div class="role-brand-title">ENSIAS Mobilite</div>
+        <div class="role-brand-sub">Espace Scolarite</div>
+      </div>
+    </div>
+    <div class="role-topbar-actions">
+      <a class="role-icon-btn" href="{% url 'notif_inbox' %}" title="Notifications">
+        <i class="bi bi-bell"></i>
+        {% if user.unread_notifications_count %}
+          <span class="role-badge">{{ user.unread_notifications_count }}</span>
+        {% endif %}
+      </a>
+      <a class="role-icon-btn" href="{% url 'logout' %}" title="Deconnexion">
+        <i class="bi bi-box-arrow-right"></i>
+      </a>
+      <button class="btn btn-sm btn-outline-primary d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#adminSidebar" aria-controls="adminSidebar">
+        <i class="bi bi-list"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="role-layout">
+    <aside class="role-sidebar d-none d-lg-flex">
+      <nav class="role-nav">
+        <a class="{% if active_nav == 'dashboard' %}active{% endif %}" href="{% url 'school_admin_dashboard' %}"><i class="bi bi-speedometer2"></i>Dashboard</a>
+        <a class="{% if active_nav == 'import' %}active{% endif %}" href="{% url 'school_admin_import' %}"><i class="bi bi-upload"></i>Import CSV</a>
+        <a class="{% if active_nav == 'export' %}active{% endif %}" href="{% url 'school_admin_export' %}"><i class="bi bi-download"></i>Export CSV</a>
+        <a class="{% if active_nav == 'documents' %}active{% endif %}" href="{% url 'school_admin_documents' %}"><i class="bi bi-folder-check"></i>Dossiers</a>
+      </nav>
+    </aside>
+
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="adminSidebar" aria-labelledby="adminSidebarLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="adminSidebarLabel">Menu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <nav class="role-nav">
+          <a class="{% if active_nav == 'dashboard' %}active{% endif %}" href="{% url 'school_admin_dashboard' %}"><i class="bi bi-speedometer2"></i>Dashboard</a>
+          <a class="{% if active_nav == 'import' %}active{% endif %}" href="{% url 'school_admin_import' %}"><i class="bi bi-upload"></i>Import CSV</a>
+          <a class="{% if active_nav == 'export' %}active{% endif %}" href="{% url 'school_admin_export' %}"><i class="bi bi-download"></i>Export CSV</a>
+          <a class="{% if active_nav == 'documents' %}active{% endif %}" href="{% url 'school_admin_documents' %}"><i class="bi bi-folder-check"></i>Dossiers</a>
+        </nav>
+      </div>
+    </div>
+
+    <main class="role-content">
+      <div class="role-content-inner">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} rounded-4 shadow-sm">{{ message }}</div>
+        {% endfor %}
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,5 @@
+<nav class="app-nav">
+  <a class="{% if active_nav == 'dashboard' %}active{% endif %}" href="{% url 'director_dashboard' %}"><i class="bi bi-speedometer2"></i>Dashboard</a>
+  <a class="{% if active_nav == 'students' %}active{% endif %}" href="{% url 'director_students' %}"><i class="bi bi-people"></i>Etudiants</a>
+  <a class="{% if active_nav == 'export' %}active{% endif %}" href="{% url 'director_export' %}"><i class="bi bi-download"></i>Export</a>
+</nav>

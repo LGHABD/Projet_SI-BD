@@ -1,0 +1,6 @@
+<nav class="app-nav">
+  <a class="{% if active_nav == 'dashboard' %}active{% endif %}" href="{% url 'school_admin_dashboard' %}"><i class="bi bi-speedometer2"></i>Dashboard</a>
+  <a class="{% if active_nav == 'import' %}active{% endif %}" href="{% url 'school_admin_import' %}"><i class="bi bi-upload"></i>Import CSV</a>
+  <a class="{% if active_nav == 'export' %}active{% endif %}" href="{% url 'school_admin_export' %}"><i class="bi bi-download"></i>Export CSV</a>
+  <a class="{% if active_nav == 'documents' %}active{% endif %}" href="{% url 'school_admin_documents' %}"><i class="bi bi-folder-check"></i>Dossiers</a>
+</nav>

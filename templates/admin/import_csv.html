@@ -1,0 +1,72 @@
+﻿{% extends "layouts/base_dashboard.html" %}
+{% block title %}Import CSV{% endblock %}
+{% block topbar_subtitle %}Espace Scolarite{% endblock %}
+{% block sidebar_content %}
+  {% include "layouts/sidebar_admin.html" %}
+{% endblock %}
+{% block sidebar_mobile %}
+  {% include "layouts/sidebar_admin.html" %}
+{% endblock %}
+{% block content %}
+<div class="role-hero">
+  <h2>Import CSV</h2>
+  <p>Etudiants ou notes</p>
+</div>
+
+<div class="role-card">
+  <form method="post" enctype="multipart/form-data" class="row g-3">
+    {% csrf_token %}
+    <div class="col-md-4">
+      <label class="form-label">Type</label>
+      <select class="form-select" name="import_type">
+        <option value="students" {% if import_type == "students" %}selected{% endif %}>Etudiants</option>
+        <option value="notes" {% if import_type == "notes" %}selected{% endif %}>Notes</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Fichier CSV</label>
+      <input class="form-control" type="file" name="csv_file" required>
+    </div>
+    <div class="col-md-2 d-flex align-items-end">
+      <button class="btn btn-ensias w-100">Importer</button>
+    </div>
+  </form>
+</div>
+
+{% if preview %}
+<div class="role-card">
+  <h5 class="fw-semibold">Preview</h5>
+  <div class="table-responsive">
+    <table class="table table-sm align-middle table-soft">
+      <thead>
+        <tr>
+          {% for key, val in preview.0.items %}
+            <th>{{ key }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in preview %}
+          <tr>
+            {% for key, val in row.items %}
+              <td>{{ val }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+
+{% if logs %}
+<div class="role-card">
+  <h5 class="fw-semibold">Logs</h5>
+  <ul class="mb-0">
+    {% for l in logs %}
+      <li>{{ l }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+{% endblock %}
